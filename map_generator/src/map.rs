@@ -4,7 +4,7 @@ use std::ops::{Index, IndexMut};
 use std::slice::Iter;
 
 /// Enum describing a map tile
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 pub enum Tile {
     Wall,
     Floor,
@@ -12,7 +12,7 @@ pub enum Tile {
 
 // TODO: inject Resource? have a trait for map instead
 /// Flat tile map of tiles
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Map {
     size: IVec2,
     tiles: Vec<Tile>,
@@ -29,7 +29,7 @@ impl Map {
     pub(crate) fn random_noise(size: IVec2, rng: &mut StdRng) -> Self {
         let mut tiles = Vec::new();
         for _ in 0..size.x * size.y {
-            let roll = rng.gen_range(0..=100);
+            let roll = rng.random_range(0..=100);
             tiles.push(if roll > 55 { Tile::Floor } else { Tile::Wall })
         }
         Self { size, tiles }
@@ -44,7 +44,7 @@ impl Map {
     }
 
     /// itterates over underlying tiles vector
-    pub fn iter(&self) -> Iter<Tile> {
+    pub fn iter(&'_ self) -> Iter<'_, Tile> {
         self.tiles.iter()
     }
     /// enumerates tiles and positions of each tile

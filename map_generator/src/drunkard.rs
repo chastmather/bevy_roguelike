@@ -18,7 +18,7 @@ impl Default for DrunkardGenerator {
 }
 
 impl MapGenerator for DrunkardGenerator {
-    fn gen(&self, rng: &mut StdRng, size: IVec2) -> Map {
+    fn generate(&self, rng: &mut StdRng, size: IVec2) -> Map {
         let mut map = Map::filled_with(size, Tile::Wall);
         let mut room_centers = Vec::new();
         let walk_steps = ((size.x * size.y) as f32 * self.walk_ratio) as usize;
@@ -26,8 +26,8 @@ impl MapGenerator for DrunkardGenerator {
 
         while map.iter().filter(|t| **t == Tile::Floor).count() < desired_floor {
             let mut from = IVec2::new(
-                rng.gen_range(1..map.size().x - 1),
-                rng.gen_range(1..map.size().y - 1),
+                rng.random_range(1..map.size().x - 1),
+                rng.random_range(1..map.size().y - 1),
             );
             room_centers.push(from);
             let stagger_count = usize::max(walk_steps / 10, 5);
@@ -50,12 +50,12 @@ fn walk(from: IVec2, max_step: usize, rng: &mut StdRng, map: &mut Map) -> IVec2 
         let tile = &mut map[pt];
         *tile = Tile::Floor;
 
-        if rng.gen_range(0..max_step) < max_step / 3 {
+        if rng.random_range(0..max_step) < max_step / 3 {
             last_valid_pt = pt;
         }
 
         let deltas = Map::get_wasd_neighbor_deltas();
-        let delta = deltas[rng.gen_range(0..deltas.len())];
+        let delta = deltas[rng.random_range(0..deltas.len())];
         pt += delta;
 
         step += 1;

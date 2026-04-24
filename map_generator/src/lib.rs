@@ -25,7 +25,7 @@ pub use rooms::RoomsGenerator;
 use prelude::*;
 
 pub trait MapGenerator {
-    fn gen(&self, rng: &mut StdRng, size: IVec2) -> Map;
+    fn generate(&self, rng: &mut StdRng, size: IVec2) -> Map;
 }
 
 // TODO: implement possibility to do map generation composition (mix multiple generators)
@@ -37,13 +37,13 @@ pub trait MapGenerator {
 pub struct RandomMapGenerator {}
 
 impl MapGenerator for RandomMapGenerator {
-    fn gen(&self, rng: &mut StdRng, size: IVec2) -> Map {
-        let generator: Box<dyn MapGenerator> = match rng.gen_range(1..4) {
+    fn generate(&self, rng: &mut StdRng, size: IVec2) -> Map {
+        let generator: Box<dyn MapGenerator> = match rng.random_range(1..4) {
             0 => Box::<ConwayLifeGenerator>::default(),
             1 => Box::<DrunkardGenerator>::default(),
             2 => Box::<RoomsGenerator>::default(),
             _ => Box::new(EmptyGenerator {}),
         };
-        generator.gen(rng, size)
+        generator.generate(rng, size)
     }
 }

@@ -15,7 +15,7 @@ impl Default for ConwayLifeGenerator {
 }
 
 impl MapGenerator for ConwayLifeGenerator {
-    fn gen(&self, rng: &mut StdRng, size: IVec2) -> Map {
+    fn generate(&self, rng: &mut StdRng, size: IVec2) -> Map {
         let mut map = Map::random_noise(size, rng);
         for _ in 0..=self.iter_count {
             iteration(&mut map);

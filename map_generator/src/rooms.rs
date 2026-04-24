@@ -17,7 +17,7 @@ impl Default for RoomsGenerator {
 }
 
 impl MapGenerator for RoomsGenerator {
-    fn gen(&self, rng: &mut StdRng, size: IVec2) -> Map {
+    fn generate(&self, rng: &mut StdRng, size: IVec2) -> Map {
         let mut map = Map::filled_with(size, Tile::Wall);
         let room_size_max = (size.as_vec2() * self.room_size_ratio).as_ivec2();
         let room_count = ((size.x * size.y) as f32 * self.room_count_ratio) as usize;
@@ -62,13 +62,13 @@ fn build_rooms(
     while rooms.len() < room_count && i > 1 {
         i -= 1;
         let room_size = IVec2::new(
-            rng.gen_range(i32::max(room_size_max.x / 4, 3)..i32::max(room_size_max.x, 5)),
-            rng.gen_range(i32::max(room_size_max.y / 4, 3)..i32::max(room_size_max.y, 5)),
+            rng.random_range(i32::max(room_size_max.x / 4, 3)..i32::max(room_size_max.x, 5)),
+            rng.random_range(i32::max(room_size_max.y / 4, 3)..i32::max(room_size_max.y, 5)),
         );
         let room = Rect::new(
             IVec2::new(
-                rng.gen_range(1..map_size.x - room_size.x),
-                rng.gen_range(1..map_size.y - room_size.y),
+                rng.random_range(1..map_size.x - room_size.x),
+                rng.random_range(1..map_size.y - room_size.y),
             ),
             room_size,
         );
