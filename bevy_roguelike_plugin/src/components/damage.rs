@@ -5,18 +5,7 @@ use std::fmt::Display;
 
 /// Type of damage that can be inflicted by actors or environment.
 #[derive(
-    Debug,
-    Default,
-    Clone,
-    Copy,
-    PartialEq,
-    Eq,
-    Hash,
-    Component,
-    Reflect,
-    FromReflect,
-    Serialize,
-    Deserialize,
+    Debug, Default, Clone, Copy, PartialEq, Eq, Hash, Component, Reflect, Serialize, Deserialize,
 )]
 #[reflect(Component)]
 // #[reflect_value(PartialEq, Serialize, Deserialize)]

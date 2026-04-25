@@ -51,7 +51,7 @@ impl<I: ItemType> Equipment<I> {
         if let Some((_, e)) = self
             .items
             .iter_mut()
-            .find(|(_, b)| b.is_some() && b.unwrap() == item)
+            .find(|(_, b)| b.is_some() && b.unwrap() == todo!() )//item)
         {
             *e = None;
             true

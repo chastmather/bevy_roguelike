@@ -154,7 +154,7 @@ use bevy_roguelike_combat::*;
 use std::fmt::Display;
 use strum_macros::EnumIter;
 
-#[derive(Debug, Default, Clone, PartialEq, Eq, Hash, Component, Reflect, FromReflect, EnumIter)]
+#[derive(Debug, Default, Clone, PartialEq, Eq, Hash, Component, Reflect, EnumIter)]
 #[reflect(Component)]
 pub enum SimpleAttribute {
     #[default]

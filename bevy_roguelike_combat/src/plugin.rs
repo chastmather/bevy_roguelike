@@ -11,13 +11,13 @@ pub struct RoguelikeCombatPlugin<S, K: DamageKind, A: AttributeType> {
 impl<S: StateData, K: DamageKind, A: AttributeType> Plugin for RoguelikeCombatPlugin<S, K, A> {
     fn build(&self, app: &mut App) {
         app.add_system_set_to_stage(
-            CoreStage::PreUpdate,
+            PreUpdate,
             SystemSet::on_update(self.state_running.clone())
                 .with_system(attributes_update_action_points::<K, A>)
                 .with_system(attributes_update_hit_points::<K, A>),
         )
         .add_system_set_to_stage(
-            CoreStage::Update,
+            Update,
             SystemSet::on_update(self.state_running.clone())
                 .with_system(attack::<K, A>)
                 .with_system(spend_ap::<A>),

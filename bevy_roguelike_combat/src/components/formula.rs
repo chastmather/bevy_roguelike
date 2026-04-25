@@ -4,17 +4,7 @@ use serde::{Deserialize, Serialize};
 use std::{fmt::Debug, hash::Hash};
 
 #[derive(
-    Debug,
-    Default,
-    Clone,
-    PartialEq,
-    Eq,
-    Hash,
-    Component,
-    Reflect,
-    FromReflect,
-    Serialize,
-    Deserialize,
+    Debug, Default, Clone, PartialEq, Eq, Hash, Component, Reflect, Serialize, Deserialize,
 )]
 #[reflect(Component)]
 pub struct Multiplier<A: AttributeType> {
@@ -31,17 +21,7 @@ impl<A: AttributeType> Multiplier<A> {
 }
 
 #[derive(
-    Debug,
-    Default,
-    Clone,
-    PartialEq,
-    Eq,
-    Hash,
-    Component,
-    Reflect,
-    FromReflect,
-    Serialize,
-    Deserialize,
+    Debug, Default, Clone, PartialEq, Eq, Hash, Component, Reflect, Serialize, Deserialize,
 )]
 #[reflect(Component)]
 pub struct LinearFormula<A: AttributeType> {
