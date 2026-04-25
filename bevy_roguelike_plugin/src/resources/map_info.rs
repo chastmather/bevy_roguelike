@@ -21,14 +21,14 @@ impl MapInfo {
             .map(|(p, _)| p)
             .collect();
 
-        let pidx = rng.gen_range(0..floor.len());
+        let pidx = rng.random_range(0..floor.len());
         let monster_count = floor.len() / 32;
         let item_count = floor.len() / 64;
         let player_start = floor[pidx];
 
         let mut monster_spawns = Vec::new();
         while monster_spawns.len() < monster_count {
-            let midx = rng.gen_range(0..floor.len());
+            let midx = rng.random_range(0..floor.len());
             let pt = floor[midx];
             if midx != pidx && !monster_spawns.contains(&pt) {
                 monster_spawns.push(pt);
@@ -37,7 +37,7 @@ impl MapInfo {
 
         let mut item_spawns = Vec::new();
         while item_spawns.len() < item_count {
-            let iidx = rng.gen_range(0..floor.len());
+            let iidx = rng.random_range(0..floor.len());
             let pt = floor[iidx];
             if !item_spawns.contains(&pt) {
                 item_spawns.push(pt);

@@ -135,7 +135,7 @@ pub fn input_fov_rand(
                 }
             }
         } else {
-            delta = deltas[rng.gen_range(0..deltas.len())];
+            delta = deltas[rng.random_range(0..deltas.len())];
         }
         act_writer.send(ActEvent { id, delta });
     }

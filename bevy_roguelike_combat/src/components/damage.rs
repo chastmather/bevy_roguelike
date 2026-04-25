@@ -40,7 +40,7 @@ impl<K: DamageKind, A: AttributeType> Damage<K, A> {
     }
     fn amount_roll(&self, rng: &mut StdRng) -> i32 {
         if !self.amount.is_empty() {
-            rng.gen_range(self.amount.clone())
+            rng.random_range(self.amount.clone())
         } else {
             self.amount.start
         }

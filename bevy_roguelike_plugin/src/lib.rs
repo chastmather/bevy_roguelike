@@ -184,7 +184,9 @@ impl<T: StateNext> RoguelikePlugin<T> {
 
         match server.get_group_load_state(loading.0.iter().map(|h| h.id)) {
             LoadState::Failed => {
-                bevy::log::error!("Asset load failed. Check preceding warnings for more info. Transitioning to next state anyway (feeling adventurous).");
+                bevy::log::error!(
+                    "Asset load failed. Check preceding warnings for more info. Transitioning to next state anyway (feeling adventurous)."
+                );
                 state.set_next();
             }
             LoadState::Loaded => {
@@ -252,7 +254,7 @@ impl<T: StateNext> RoguelikePlugin<T> {
         let mut rng = StdRng::from_rng(trng).expect("Could not construct StdRng using ThreadRng");
 
         let map_generator = RandomMapGenerator {};
-        let map = map_generator.gen(&mut rng, options.map_size);
+        let map = map_generator.generate(&mut rng, options.map_size);
         let info = MapInfo::from_map(&map, &mut rng);
 
         #[cfg(feature = "debug")]
@@ -269,7 +271,7 @@ impl<T: StateNext> RoguelikePlugin<T> {
         let inventory_themes: Vec<_> = inventory_themes.iter().map(|(_, it)| it).collect();
         bevy::log::info!("inventory theme count: {}", inventory_themes.len());
 
-        let inventory_theme = inventory_themes[rng.gen_range(0..inventory_themes.len())];
+        let inventory_theme = inventory_themes[rng.random_range(0..inventory_themes.len())];
         cmd.insert_resource(InventoryAssets {
             slot: asset_server.load(inventory_theme.slot.as_str()),
             head_wear: asset_server.load(inventory_theme.head_wear.as_str()),
@@ -287,7 +289,7 @@ impl<T: StateNext> RoguelikePlugin<T> {
         });
 
         let map_themes: Vec<_> = map_themes.iter().map(|(_, it)| it).collect();
-        let map_theme = map_themes[rng.gen_range(0..map_themes.len())];
+        let map_theme = map_themes[rng.random_range(0..map_themes.len())];
         let map_id = cmd
             .spawn((SpatialBundle::default(), Name::new("RogueMap")))
             .with_children(|rogue_map| {
@@ -295,10 +297,10 @@ impl<T: StateNext> RoguelikePlugin<T> {
                     let texture = asset_server.load(
                         match tile {
                             Tile::Wall => {
-                                map_theme.wall[rng.gen_range(0..map_theme.wall.len())].clone()
+                                map_theme.wall[rng.random_range(0..map_theme.wall.len())].clone()
                             }
                             Tile::Floor => {
-                                map_theme.floor[rng.gen_range(0..map_theme.floor.len())].clone()
+                                map_theme.floor[rng.random_range(0..map_theme.floor.len())].clone()
                             }
                         }
                         .as_str(),
@@ -325,7 +327,7 @@ impl<T: StateNext> RoguelikePlugin<T> {
             .spawn((SpatialBundle::default(), Name::new("Items")))
             .with_children(|cb| {
                 for ipt in info.item_spawns.clone() {
-                    let template = item_templates[rng.gen_range(0..item_templates.len())];
+                    let template = item_templates[rng.random_range(0..item_templates.len())];
                     let quality = Quality::roll(&mut rng);
                     let mut ecmd = cb.spawn(Vector2D::from(ipt));
                     spawn_item(
@@ -366,8 +368,9 @@ impl<T: StateNext> RoguelikePlugin<T> {
             .spawn((SpatialBundle::default(), Name::new("Enemies")))
             .with_children(|enms| {
                 for mpt in info.monster_spawns.clone() {
-                    let monster_template = actor_templates[rng.gen_range(0..actor_templates.len())];
-                    let team_monster = 1 + rng.gen_range(2..4);
+                    let monster_template =
+                        actor_templates[rng.random_range(0..actor_templates.len())];
+                    let team_monster = 1 + rng.random_range(2..4);
                     enms.spawn((
                         Actor::new(
                             asset_server.clone(),

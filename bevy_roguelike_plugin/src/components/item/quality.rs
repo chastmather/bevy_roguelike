@@ -35,7 +35,7 @@ impl Quality {
         // Normal 50%
         // Masterwork 20 %
         // Artifact 5 %
-        match rng.gen_range(0..100) {
+        match rng.random_range(0..100) {
             0..=5 => Self::Broken,
             6..=25 => Self::Damaged,
             26..=75 => Self::Normal,
@@ -96,7 +96,7 @@ impl MutableQuality for u8 {
         if range.is_empty() {
             range.start
         } else {
-            rng.gen_range(range)
+            rng.random_range(range)
         }
     }
 }
@@ -113,7 +113,7 @@ impl MutableQuality for u16 {
         if range.is_empty() {
             range.start
         } else {
-            rng.gen_range(range)
+            rng.random_range(range)
         }
     }
 }
@@ -130,7 +130,7 @@ impl MutableQuality for i16 {
         if range.is_empty() {
             range.start
         } else {
-            rng.gen_range(range)
+            rng.random_range(range)
         }
     }
 }
@@ -147,7 +147,7 @@ impl MutableQuality for i32 {
         if range.is_empty() {
             range.start
         } else {
-            rng.gen_range(range)
+            rng.random_range(range)
         }
     }
 }

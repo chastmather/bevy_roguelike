@@ -92,7 +92,7 @@ pub fn attack<K: DamageKind, A: AttributeType>(
 
         let rng = &mut *rng;
 
-        let damage = &attacker_stats.damage[rng.gen_range(0..attacker_stats.damage.len())];
+        let damage = &attacker_stats.damage[rng.random_range(0..attacker_stats.damage.len())];
 
         // TODO: spawn attack animation (based on damage.kind)
         // spawn event?
