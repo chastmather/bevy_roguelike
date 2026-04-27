@@ -6,10 +6,10 @@ mod rect;
 mod rooms;
 
 mod prelude {
+    pub use super::MapGenerator;
     pub use super::map::Map;
     pub use super::map::Tile;
     pub use super::rect::Rect;
-    pub use super::MapGenerator;
     pub use glam::IVec2;
     pub use line_drawing::WalkGrid;
     pub use rand::prelude::*;
